@@ -1,7 +1,7 @@
 # ft_irc
 
-[![en](https://img.shields.io/badge/lang-en-pink.svg)](README.en.md)
-[![fr](https://img.shields.io/badge/lang-fr-purple.svg)](README.md)
+[![en](https://img.shields.io/badge/lang-en-pink.svg)](README.md)
+[![fr](https://img.shields.io/badge/lang-fr-purple.svg)](README.fr.md)
 
 ## Avant-propos
 
