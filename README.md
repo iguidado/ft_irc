@@ -1,5 +1,8 @@
 # ft_irc
 
+[![en](https://img.shields.io/badge/lang-en-pink.svg)](README.md)
+[![fr](https://img.shields.io/badge/lang-fr-purple.svg)](README.fr.md)
+
 An IRC server written in C++, built to comply with RFC 2812. It handles multiple simultaneous clients, manages channels and user permissions, and implements the core IRC command set — including the full MODE system. A ChatGPT-powered bot, developed by [Théo Zeribi](https://github.com/TheoZerbibi), is also integrated as a conversational agent accessible directly from any IRC channel.
 
 This is a 42 school project, completed as a two-person team.
