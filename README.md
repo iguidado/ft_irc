@@ -3,6 +3,7 @@
 [![en](https://img.shields.io/badge/lang-en-pink.svg)](README.md)
 [![fr](https://img.shields.io/badge/lang-fr-purple.svg)](README.fr.md)
 
+
 An IRC server written in C++, built to comply with RFC 2812. It handles multiple simultaneous clients, manages channels and user permissions, and implements the core IRC command set — including the full MODE system. A ChatGPT-powered bot, developed by [Théo Zeribi](https://github.com/TheoZerbibi), is also integrated as a conversational agent accessible directly from any IRC channel.
 
 This is a 42 school project, completed as a two-person team.
@@ -27,23 +28,30 @@ This implementation covers:
 
 ## Architecture
 
-The server runs a single-threaded event loop using `poll()`, handling all connected file descriptors without blocking. Each client has its own command buffer to handle TCP stream fragmentation.
+The server runs a single-threaded event loop using `select()`, handling all connected file descriptors without blocking. Each client has its own command buffer to handle TCP stream fragmentation. Commands are each implemented as a dedicated class, making the command set easy to extend.
 
 ```
 ft_irc/
 ├── inc/
-│   ├── Channel.hpp
+│   ├── Irc.hpp              # Server core
 │   ├── User.hpp
-│   ├── Command.hpp
-│   └── ft_irc.hpp
-├── srcs/
-│   ├── main.cpp
-│   ├── setsocket.cpp
-│   ├── client_input.cpp
-│   ├── User.cpp
-│   ├── Channel.cpp
-│   └── commands/
-│       └── Command.cpp
+│   ├── Channel.hpp
+│   ├── Reply.hpp            # Numeric replies (RPL/ERR)
+│   └── Commands/            # One class per IRC command
+│       ├── Command.hpp
+│       ├── JoinCommand.hpp
+│       ├── ModeCommand.hpp
+│       ├── PrivMsgCommand.hpp
+│       └── ...
+├── srcs/                    # Mirrors inc/ structure
+├── bot/                     # Standalone ChatGPT bot (Théo Zeribi)
+│   └── srcs/
+│       ├── Bot.cpp          # OpenAI API integration
+│       └── Socket.cpp
+├── test/                    # Test scripts and proxy tool
+│   ├── ncirc.sh
+│   ├── proxy/               # TCP proxy for traffic inspection
+│   └── Input/               # Raw IRC command sequences
 └── Makefile
 ```
 
@@ -53,7 +61,7 @@ ft_irc/
 
 - **Language**: C++98
 - **Networking**: POSIX sockets (`sys/socket.h`, `netinet/in.h`, `arpa/inet.h`)
-- **Multiplexing**: `poll()`
+- **Multiplexing**: `select()`
 - **Tested with**: irssi
 
 > Note: the server was developed and tested against irssi. Behavior with other clients may vary.
